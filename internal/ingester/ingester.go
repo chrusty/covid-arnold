@@ -12,16 +12,17 @@ import (
 
 // Ingester is a self-contained data ingester
 type Ingester struct {
-	dataURL string
-	logger  *logrus.Logger
-	storage *storage.Storage
+	dataURL        string
+	logger         *logrus.Logger
+	storageManager *storage.Manager
 }
 
 // New returns a configured Ingester
-func New(dataURL string, logger *logrus.Logger) *Ingester {
+func New(dataURL string, logger *logrus.Logger, storageManager *storage.Manager) *Ingester {
 	return &Ingester{
-		dataURL: dataURL,
-		logger:  logger,
+		dataURL:        dataURL,
+		logger:         logger,
+		storageManager: storageManager,
 	}
 }
 
@@ -53,5 +54,5 @@ func (i *Ingester) ingest() error {
 	}
 	i.logger.WithField("records", len(dailyRegions)).Debug("Downloaded data")
 
-	return nil
+	return i.storageManager.StoreDailyRegions(dailyRegions)
 }
