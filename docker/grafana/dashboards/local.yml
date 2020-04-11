@@ -1,0 +1,14 @@
+apiVersion: 1
+
+providers:
+- name: 'JSON Files'
+  orgId: 1
+  folder: ''
+  folderUid: ''
+  type: file
+  disableDeletion: false
+  editable: true
+  updateIntervalSeconds: 300
+  allowUiUpdates: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/json/
