@@ -5,8 +5,9 @@ services:
     container_name: postgres
     image: postgres:12.2
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_USER: ${POSTGRES_USER:-covid}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-arnold}
+      POSTGRES_DB: covid
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
