@@ -28,10 +28,21 @@ func New(dataURL string, logger *logrus.Logger, storageManager *storage.Manager)
 
 // Start tells the ingester to begin its ingestion cycle
 func (i *Ingester) Start(frequency time.Duration) {
-	i.logger.WithField("frequency", frequency).Info("Ingester starting")
+
+	// Run an initial ingest to get things going
+	if err := i.ingest(); err != nil {
+		i.logger.WithError(err).Fatal("Ingest failed")
+	}
+
+	// Make a ticker for accurate scheduling
+	i.logger.WithField("frequency", frequency).Info("Ingest scheduler starting")
+	ticker := time.NewTicker(frequency)
+	defer ticker.Stop()
+
+	// Ingest whenever there is a tick
 	for {
+		<-ticker.C
 		i.ingest()
-		time.Sleep(frequency)
 	}
 }
 
