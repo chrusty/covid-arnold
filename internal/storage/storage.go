@@ -12,6 +12,7 @@ import (
 // Manager has everything we need to interact with the database
 type Manager struct {
 	dbConn *gorm.DB
+	logger *logrus.Logger
 }
 
 // New returns a fully configured storage interface
@@ -23,10 +24,14 @@ func New(logger *logrus.Logger, connectionString string) (*Manager, error) {
 		return nil, err
 	}
 
+	// Disable annoying output
+	dbConn.LogMode(false)
+
 	// Migrate tables for our models
 	dbConn.AutoMigrate(&models.DailyRegion{})
 
 	return &Manager{
 		dbConn: dbConn,
+		logger: logger,
 	}, nil
 }

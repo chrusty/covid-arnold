@@ -1,21 +1,16 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 // DailyRegion represents a daily report for a specific region
 type DailyRegion struct {
-	gorm.Model
-	Confirmed   int32
+	Confirmed   float32
 	CountryCode string `gorm:"PRIMARY_KEY"`
 	CountryName string `gorm:"index:country_name"`
 	Date        string `gorm:"PRIMARY_KEY"`
-	Deaths      int32
+	Deaths      float32
 	Key         string
-	Latitide    string
+	Latitude    string
 	Longitude   string
-	Population  int64
+	Population  float32
 	RegionCode  string `gorm:"PRIMARY_KEY,NULL"`
 	RegionName  string `gorm:"index:region_name"`
 }

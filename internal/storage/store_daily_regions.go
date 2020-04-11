@@ -7,7 +7,9 @@ func (m *Manager) StoreDailyRegions(dailyRegions []*models.DailyRegion) error {
 
 	// Insert the records
 	for _, dailyRegion := range dailyRegions {
-		m.dbConn.Create(dailyRegion)
+		if err := m.dbConn.Create(dailyRegion).Error; err != nil {
+			m.logger.WithError(err).Warn("Error inserting a row")
+		}
 	}
 
 	return nil
