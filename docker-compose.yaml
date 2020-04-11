@@ -5,10 +5,10 @@ services:
     container_name: postgres
     image: postgres:12.2
     environment:
-      POSTGRES_USER: covid
-      POSTGRES_PASSWORD: arnold
-      POSTGRES_DB: covid
-      PGDATA: /data/postgres
+      POSTGRES_USER: "covid"
+      POSTGRES_PASSWORD: "arnold"
+      POSTGRES_DB: "covid"
+      PGDATA: "/data/postgres"
     volumes:
        - postgres:/data/postgres
     ports:
@@ -23,16 +23,29 @@ services:
       context: .
       dockerfile: docker/Dockerfile.ingester
     environment:
-      DB_HOSTNAME: postgres
-      DB_NAME: covid
-      DB_PASSWORD: arnold
-      DB_USER_NAME: covid
-      LOGGING_LEVEL: debug
+      DB_HOSTNAME: "postgres"
+      DB_NAME: "covid"
+      DB_PASSWORD: "arnold"
+      DB_USER_NAME: "covid"
+      LOGGING_LEVEL: "debug"
     networks:
       - data
     restart: unless-stopped
     depends_on:
       - postgres
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+    volumes:
+      - ./docker/grafana/:/etc/grafana/provisioning/
+    ports:
+      - "3000:3000"
+    networks:
+      - data
+    restart: unless-stopped
 
 networks:
   data:
