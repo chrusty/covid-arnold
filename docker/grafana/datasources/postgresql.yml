@@ -1,0 +1,17 @@
+apiVersion: 1
+
+datasources:
+- name: PostgreSQL
+  type: postgres
+  version: 2
+  url: postgres:5432
+  access: proxy
+  database: covid
+  user: covid
+  secureJsonData:
+    password: arnold
+  jsonData:
+    sslmode: "disable"
+    postgresVersion: 1200
+  isDefault: true
+  editable: true
