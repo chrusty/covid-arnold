@@ -5,8 +5,8 @@ services:
     container_name: postgres
     image: postgres:12.2
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-covid}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-arnold}
+      POSTGRES_USER: covid
+      POSTGRES_PASSWORD: arnold
       POSTGRES_DB: covid
       PGDATA: /data/postgres
     volumes:
@@ -16,6 +16,23 @@ services:
     networks:
       - data
     restart: unless-stopped
+
+  ingester:
+    container_name: ingester
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ingester
+    environment:
+      DB_HOSTNAME: postgres
+      DB_NAME: covid
+      DB_PASSWORD: arnold
+      DB_USER_NAME: covid
+      LOGGING_LEVEL: debug
+    networks:
+      - data
+    restart: unless-stopped
+    depends_on:
+      - postgres
 
 networks:
   data:

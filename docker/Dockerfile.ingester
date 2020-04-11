@@ -1,0 +1,6 @@
+FROM golang:1.14-alpine
+
+COPY . /go/src
+WORKDIR /go/src
+RUN go build -o /usr/bin/ingester cmd/ingester/main.go
+CMD /usr/bin/ingester

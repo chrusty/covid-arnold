@@ -1,5 +1,5 @@
 run:
-	@docker-compose up -d
+	@docker-compose --project-name=covidarnold up -d
 
 build:
 	@mkdir -p bin
