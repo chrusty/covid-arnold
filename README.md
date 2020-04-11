@@ -2,6 +2,12 @@ covid-arnold
 ============
 COVID-19 lockdown tracker powered by Arnold Technology
 
+Getting started
+---------------
+
+COVID-Arnold is built around docker-compose. To bring up a database, ingester, and Grafana instance to get going (requires Docker and `docker-compose`):
+`make run`
+
 
 Components
 ----------
