@@ -18,6 +18,7 @@ func main() {
 
 	// Dependencies
 	logger := logrus.New()
+	logger.Formatter = &logrus.TextFormatter{FullTimestamp: true}
 
 	// Load config (from env-vars)
 	config, err := configuration.Load()
