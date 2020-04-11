@@ -5,12 +5,12 @@ type DailyRegion struct {
 	Confirmed   float32
 	CountryCode string `gorm:"PRIMARY_KEY"`
 	CountryName string `gorm:"index:country_name"`
-	Date        string `gorm:"PRIMARY_KEY"`
+	Date        string `gorm:"type:date;PRIMARY_KEY"`
 	Deaths      float32
-	Key         string
+	Key         string `gorm:"PRIMARY_KEY"`
 	Latitude    string
 	Longitude   string
 	Population  float32
-	RegionCode  string `gorm:"PRIMARY_KEY,NULL"`
+	RegionCode  string `gorm:"index:region_code"`
 	RegionName  string `gorm:"index:region_name"`
 }
