@@ -6,6 +6,7 @@ import (
 	"github.com/chrusty/covid-arnold/internal/configuration"
 	"github.com/chrusty/covid-arnold/internal/ingester"
 	"github.com/chrusty/covid-arnold/internal/storage"
+
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,11 +18,18 @@ func main() {
 
 	// Dependencies
 	logger := logrus.New()
-	logger.SetLevel(logrus.DebugLevel)
 
+	// Load config (from env-vars)
 	config, err := configuration.Load()
 	if err != nil {
 		logger.WithError(err).Fatal("Unable to load config")
+	}
+
+	// Set the log-level (if it parses)
+	if logrusLevel, err := logrus.ParseLevel(config.Logging.Level); err != nil {
+		logger.WithError(err).Warnf("Configured log-level (%s) is invalid", config.Logging.Level)
+	} else {
+		logger.SetLevel(logrusLevel)
 	}
 
 	// Prepare a storage managerL
