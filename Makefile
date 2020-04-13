@@ -4,3 +4,6 @@ run:
 build:
 	@mkdir -p bin
 	@go build -o bin/ingester cmd/ingester/main.go
+
+forecast:
+	@docker build . -t covidarnold_forecaster -f docker/Dockerfile.forecaster

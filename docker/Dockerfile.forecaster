@@ -1,0 +1,9 @@
+FROM tensorflow/tensorflow:latest
+
+RUN pip install tensorflow-io
+
+ENV DB_HOSTNAME localhost
+ENV DB_NAME postgres
+ENV DB_PASSWORD postgres
+ENV DB_PORT 5432
+ENV DB_USER_NAME postgres
