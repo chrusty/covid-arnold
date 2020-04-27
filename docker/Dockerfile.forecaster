@@ -1,6 +1,6 @@
-FROM tensorflow/tensorflow:latest
+FROM tensorflow/tensorflow:nightly-py3-jupyter
 
-RUN pip install tensorflow-io
+RUN pip3 install tensorflow-io
 
 ENV DB_HOSTNAME localhost
 ENV DB_NAME postgres

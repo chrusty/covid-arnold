@@ -16,5 +16,6 @@ forecast:
 		-e DB_PASSWORD=arnold \
 		-e DB_NAME=covid \
 		-e DB_HOSTNAME=postgres \
+		-v ${PWD}/docker/forecast/:/forecast \
 		covidarnold_forecaster:latest \
 		bash

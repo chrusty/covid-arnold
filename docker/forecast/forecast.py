@@ -13,7 +13,7 @@ postgres_endpoint = "postgresql://{}:{}@{}?port={}&dbname={}".format(
 
 # Load the dataset from Postgres
 dataset = tfio.experimental.IODataset.from_sql(
-    query = 'SELECT SUM(deaths) AS "deaths", SUM(confirmed) AS "confirmed", SUM(population) AS "population", date FROM daily_regions WHERE region_code = '' GROUP BY date ORDER BY date ASC;',
+    query = 'SELECT SUM(deaths) AS "deaths", SUM(confirmed) AS "confirmed", SUM(population) AS "population", date FROM daily_regions WHERE region_code = \'\' GROUP BY date ORDER BY date ASC;',
     endpoint = postgres_endpoint)
 
 print(dataset.element_spec)
