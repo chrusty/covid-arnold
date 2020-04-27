@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1586638938687,
+  "iteration": 1587957010268,
   "links": [],
   "panels": [
     {
@@ -28,6 +28,308 @@
         "w": 24,
         "x": 0,
         "y": 0
+      },
+      "id": 13,
+      "panels": [],
+      "title": "Selected Country ($CountryName)",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPrefix": false,
+      "colorValue": true,
+      "colors": [
+        "#73BF69",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "PostgreSQL",
+      "decimals": 2,
+      "format": "short",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 11,
+        "x": 0,
+        "y": 1
+      },
+      "id": 11,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:8195",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:8196",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "pluginVersion": "6.7.2",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "Population",
+      "prefixFontSize": "100%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  date AS \"time\",\n  sum(population)\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_code = ''\nGROUP BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "daily_regions",
+          "timeColumn": "time",
+          "where": []
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "100%",
+      "valueMaps": [],
+      "valueName": "max"
+    },
+    {
+      "aliasColors": {
+        "deaths": "red"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "hiddenSeries": false,
+      "id": 14,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 3,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "date"
+              ],
+              "type": "column"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  date AS \"time\",\n  sum(deaths) AS \"deaths\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_code = ''\nGROUP BY date\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "deaths"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "deaths"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "daily_regions",
+          "timeColumn": "date",
+          "timeColumnType": "date",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "country_code"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "date"
+              ],
+              "type": "column"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  date AS \"time\",\n  sum(confirmed) AS \"confirmed\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_code = ''\nGROUP BY date\nORDER BY 1",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "confirmed"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "confirmed"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "daily_regions",
+          "timeColumn": "date",
+          "timeColumnType": "date",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:149",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:150",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
       },
       "id": 7,
       "panels": [],
@@ -58,7 +360,7 @@
         "h": 2,
         "w": 11,
         "x": 0,
-        "y": 1
+        "y": 16
       },
       "id": 9,
       "interval": null,
@@ -147,7 +449,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 3,
@@ -323,306 +625,307 @@
       }
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 30
       },
       "id": 5,
-      "panels": [],
-      "title": "Selected country / region ($CountryName / $RegionName)",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPrefix": false,
-      "colorValue": true,
-      "colors": [
-        "#73BF69",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "PostgreSQL",
-      "decimals": 2,
-      "format": "short",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 11,
-        "x": 0,
-        "y": 16
-      },
-      "id": 10,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
+      "panels": [
         {
-          "$$hashKey": "object:8195",
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "$$hashKey": "object:8196",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.7.2",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "Population",
-      "prefixFontSize": "100%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  date AS \"time\",\n  sum(population)\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY time",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorPrefix": false,
+          "colorValue": true,
+          "colors": [
+            "#73BF69",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
           ],
-          "table": "daily_regions",
-          "timeColumn": "time",
-          "where": []
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transparent": true,
-      "type": "singlestat",
-      "valueFontSize": "100%",
-      "valueMaps": [],
-      "valueName": "max"
-    },
-    {
-      "aliasColors": {
-        "deaths": "red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 3,
-      "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [
+          "datasource": "PostgreSQL",
+          "decimals": 2,
+          "format": "short",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 11,
+            "x": 0,
+            "y": 17
+          },
+          "id": 10,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
             {
-              "params": [
-                "date"
-              ],
-              "type": "column"
-            }
-          ],
-          "hide": false,
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  date AS \"time\",\n  sum(deaths) AS \"deaths\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY date\nORDER BY 1",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "deaths"
-                ],
-                "type": "column"
-              },
-              {
-                "params": [
-                  "sum"
-                ],
-                "type": "aggregate"
-              },
-              {
-                "params": [
-                  "deaths"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "table": "daily_regions",
-          "timeColumn": "date",
-          "timeColumnType": "date",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        },
-        {
-          "format": "time_series",
-          "group": [
-            {
-              "params": [
-                "country_code"
-              ],
-              "type": "column"
+              "$$hashKey": "object:8195",
+              "name": "value to text",
+              "value": 1
             },
             {
-              "params": [
-                "date"
-              ],
-              "type": "column"
+              "$$hashKey": "object:8196",
+              "name": "range to text",
+              "value": 2
             }
           ],
-          "hide": false,
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  date AS \"time\",\n  sum(confirmed) AS \"confirmed\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY date\nORDER BY 1",
-          "refId": "B",
-          "select": [
-            [
-              {
-                "params": [
-                  "confirmed"
-                ],
-                "type": "column"
-              },
-              {
-                "params": [
-                  "sum"
-                ],
-                "type": "aggregate"
-              },
-              {
-                "params": [
-                  "confirmed"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "table": "daily_regions",
-          "timeColumn": "date",
-          "timeColumnType": "date",
-          "where": [
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "pluginVersion": "6.7.2",
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "Population",
+          "prefixFontSize": "100%",
+          "rangeMaps": [
             {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
             }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:149",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
+          ],
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false,
+            "ymax": null,
+            "ymin": null
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  date AS \"time\",\n  sum(population)\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY time",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "table": "daily_regions",
+              "timeColumn": "time",
+              "where": []
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "singlestat",
+          "valueFontSize": "100%",
+          "valueMaps": [],
+          "valueName": "max"
         },
         {
-          "$$hashKey": "object:150",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "aliasColors": {
+            "deaths": "red"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 12,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "hiddenSeries": false,
+          "id": 2,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 3,
+          "nullPointMode": "connected",
+          "options": {
+            "dataLinks": []
+          },
+          "percentage": false,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "date"
+                  ],
+                  "type": "column"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  date AS \"time\",\n  sum(deaths) AS \"deaths\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY date\nORDER BY 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "deaths"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "sum"
+                    ],
+                    "type": "aggregate"
+                  },
+                  {
+                    "params": [
+                      "deaths"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "table": "daily_regions",
+              "timeColumn": "date",
+              "timeColumnType": "date",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "country_code"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "date"
+                  ],
+                  "type": "column"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  date AS \"time\",\n  sum(confirmed) AS \"confirmed\"\nFROM daily_regions\nWHERE country_name = '$CountryName'\nAND region_name IN ($RegionName)\nAND region_code != ''\nGROUP BY date\nORDER BY 1",
+              "refId": "B",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "confirmed"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "sum"
+                    ],
+                    "type": "aggregate"
+                  },
+                  {
+                    "params": [
+                      "confirmed"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "table": "daily_regions",
+              "timeColumn": "date",
+              "timeColumnType": "date",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:149",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "$$hashKey": "object:150",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Selected Country / Region ($CountryName / $RegionName)",
+      "type": "row"
     }
   ],
   "refresh": "5m",
@@ -634,9 +937,10 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "tags": [],
-          "text": "United States of America",
-          "value": "United States of America"
+          "text": "New Zealand",
+          "value": "New Zealand"
         },
         "datasource": "PostgreSQL",
         "definition": "SELECT DISTINCT country_name FROM daily_regions ORDER BY country_name ASC;",
@@ -689,8 +993,9 @@
       {
         "allValue": null,
         "current": {
-          "text": "635303296401",
-          "value": "635303296401"
+          "selected": true,
+          "text": "758234292605",
+          "value": "758234292605"
         },
         "datasource": "PostgreSQL",
         "definition": "SELECT SUM(population) FROM daily_regions WHERE region_code = '';",
@@ -738,5 +1043,5 @@
   "variables": {
     "list": []
   },
-  "version": 1
+  "version": 2
 }
